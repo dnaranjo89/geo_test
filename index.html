@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>My Routing Map</title>
+  <link rel="stylesheet" href="leaflet/leaflet.css">
+  <link rel="stylesheet" href="lrm-valhalla/leaflet.routing.valhalla.css">
+  <script src="leaflet/leaflet.js"></script>
+  <script src="https://mapzen.com/tangram/tangram.min.js"></script>
+  <script src="leaflet-routing-machine/leaflet-routing-machine.js"></script>
+  <script src="lrm-valhalla/lrm-valhalla.js"></script>
+  <script src="src/js/map_wrapper.js"></script>
+
+  <style>
+
+    #map {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+    }
+  </style>
+</head>
+<div id="map"></div>
+<body>
+<script>
+    AccesibleMap.setup();
+    AccesibleMap.draw_routes();
+</script>
+hi
+</body>
+</html>
