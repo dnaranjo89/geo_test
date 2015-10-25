@@ -33,7 +33,8 @@ AccesibleMap.search = function(query){
         response.features.map(function(location){
             var cords = location.geometry.coordinates;
             var pos =  [cords[1], cords[0]];
-            AccesibleMap.add_marker(pos);
+            var title = location.properties.label;
+            AccesibleMap.add_marker(pos, title);
         });
     }).fail(function(){
         console.log("Couldn't find location");
@@ -43,8 +44,12 @@ AccesibleMap.search = function(query){
 /**
  * Internal functions
  */
-AccesibleMap.add_marker = function(location){
-    L.marker(location).addTo(AccesibleMap.map);
+AccesibleMap.add_marker = function(location, title){
+    var options = {
+        "title": title,
+    };
+    return L.marker(location, options).addTo(AccesibleMap.map)
+        .bindPopup(title);
 };
 
 AccesibleMap.calculate_route_auto = function(origen, destination){
