@@ -1,7 +1,7 @@
 
 var AccesibleMap = {};
 
-AccesibleMap.setup2 = function(){
+AccesibleMap.setup = function(){
     var map = L.map('map');
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -24,6 +24,27 @@ AccesibleMap.test_route = function(){
 AccesibleMap.draw_complete_route = function (origen, parking, destination, step_penalty){
     AccesibleMap.calculate_route_auto(origen, parking).addTo(AccesibleMap.map);
     AccesibleMap.calculate_route_pedestrian(parking, destination, step_penalty).addTo(AccesibleMap.map);
+};
+
+AccesibleMap.search = function(query){
+    var num_results = 1;
+    var url = "https://search.mapzen.com/v1/search?api_key=search-AU6x3Ho&text=" + query + "&boundary.country=ES&size=" + num_results;
+    $.get(url).done(function(response){
+        response.features.map(function(location){
+            var cords = location.geometry.coordinates;
+            var pos =  [cords[1], cords[0]];
+            AccesibleMap.add_marker(pos);
+        });
+    }).fail(function(){
+        console.log("Couldn't find location");
+    });
+};
+
+/**
+ * Internal functions
+ */
+AccesibleMap.add_marker = function(location){
+    L.marker(location).addTo(AccesibleMap.map);
 };
 
 AccesibleMap.calculate_route_auto = function(origen, destination){
