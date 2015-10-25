@@ -1,15 +1,47 @@
+/**
+ * https://mapzen.com/documentation/tangram/Scene-file/
+ * Scenes: https://github.com/tangrams?query=demo
+ * Simple: https://raw.githubusercontent.com/tangrams/nogui-demo/gh-pages/scene.yaml
+ * Simple2: https://raw.githubusercontent.com/tangrams/simple-demo/gh-pages/scene.yaml
+ */
+
+
 var AccesibleMap = {};
+AccesibleMap.setup2 = function(){
+    var map = L.map('map');
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 20,
+        id: 'dnaranjo89.97a21b99',
+        accessToken: 'pk.eyJ1IjoiZG5hcmFuam84OSIsImEiOiJjaWc1Z2p4ZTc0MW0ydWttM3Mxem44cmVlIn0.qYwIDUVfbIQ2x2a9IQgg-g'
+    }).addTo(map);
+    map.setView([39.472499, -6.376273], 15);
+    AccesibleMap.map = map;
+};
 
 AccesibleMap.setup = function(){
     var map = L.map('map');
     var layer = Tangram.leafletLayer({
-      scene: 'https://raw.githubusercontent.com/valhalla/valhalla-docs/master/examples/skin-and-bones-scene.yaml',
+        maxZoom: 20,
+      //scene: 'scenes/original.yaml', // Original
+      //scene: 'scenes/nogui-scene/scene.yaml', // Original
+      scene: 'scenes/eraser-map/eraser-map.yaml', // Best option
+      //scene: 'https://raw.githubusercontent.com/valhalla/valhalla-docs/master/examples/skin-and-bones-scene.yaml', // Original
+      //scene: 'https://raw.githubusercontent.com/tangrams/simple-demo/gh-pages/scene.yaml',  // Simple 1
+      //scene: 'https://raw.githubusercontent.com/tangrams/nogui-demo/gh-pages/scene.yaml',  // Simple
+      //scene: 'https://raw.githubusercontent.com/tangrams/eraser-map/gh-pages/eraser-map.yaml',  // Steps without street names
       attribution: '<a href="https://mapzen.com/tangram" target="_blank">Tangram</a> | <a href="http://www.openstreetmap.org/about" target="_blank">&copy; OSM contributors | <a href="https://mapzen.com/" target="_blank">Mapzen</a>',
     });
     layer.addTo(map);
 
     // Focus map on Caceres
-    map.setView([39.472499, -6.376273], 15);
+    /*L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 20,
+        id: 'dnaranjo89.97a21b99',
+        accessToken: 'pk.eyJ1IjoiZG5hcmFuam84OSIsImEiOiJjaWc1Z2p4ZTc0MW0ydWttM3Mxem44cmVlIn0.qYwIDUVfbIQ2x2a9IQgg-g'
+    }).addTo(map);
+    map.setView([39.472499, -6.376273], 15);*/
     AccesibleMap.map = map;
 };
 
@@ -32,7 +64,7 @@ AccesibleMap.calculate_route_auto = function(origen, destination){
     var costing_options = {};
     var mode = "auto";
     return AccesibleMap.calculate_route(waypoints, mode, costing_options);
-}
+};
 
 AccesibleMap.calculate_route_pedestrian = function(origen, destination, step_penalty){
     var waypoints = [origen, destination];
