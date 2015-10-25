@@ -41,9 +41,23 @@ AccesibleMap.search = function(query){
     });
 };
 
+AccesibleMap.show_current_location = function (){
+    function showPosition(position) {
+        AccesibleMap.add_marker([position.coords.latitude, position.coords.longitude], "Here you are");
+        console.log("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
+    }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
+};
+
 /**
  * Internal functions
  */
+
 AccesibleMap.add_marker = function(location, title){
     var options = {
         "title": title,
